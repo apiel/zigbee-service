@@ -17,6 +17,6 @@ export function init(
     }
 }
 
-export { useFactory } from './shepherd.factory';
-export { ZigbeeService } from './zigbee.service';
-export { DeviceService } from './device.service';
+export { useFactory as useFactory } from './shepherd.factory';
+export { ZigbeeService as ZigbeeService } from './zigbee.service';
+export { DeviceService as DeviceService } from './device.service';
