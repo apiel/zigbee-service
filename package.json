@@ -1,0 +1,29 @@
+{
+  "name": "zigbee-service",
+  "version": "0.0.0",
+  "description": "Service for zigbee-api",
+  "main": "build/index.js",
+  "repository": "https://github.com/apiel/zigbee-service",
+  "author": "alexandre.piel@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json -c tslint.json"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "lodash": "^4.17.11",
+    "zcl-packet": "git+https://github.com/Koenkk/zcl-packet.git#fbd8c936bbd4be0597ad3e934be0ca722b0128a6",
+    "zigbee-shepherd": "git+https://github.com/Koenkk/zigbee-shepherd.git#ce52ac4131e2a505af6197b4a26d2b5360e4eb80",
+    "zigbee-shepherd-converters": "^7.0.2"
+  },
+  "devDependencies": {
+    "@types/debug": "^0.0.31",
+    "@types/events": "^3.0.0",
+    "@types/lodash": "^4.14.120",
+    "@types/node": "^10.12.18",
+    "tslint": "5.11.0",
+    "typescript": "^3.0.1"
+  }
+}
