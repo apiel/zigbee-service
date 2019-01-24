@@ -14,4 +14,10 @@ function init(config, logger = new logger_1.Logger) {
     };
 }
 exports.init = init;
+var shepherd_factory_2 = require("./shepherd.factory");
+exports.useFactory = shepherd_factory_2.useFactory;
+var zigbee_service_2 = require("./zigbee.service");
+exports.ZigbeeService = zigbee_service_2.ZigbeeService;
+var device_service_2 = require("./device.service");
+exports.DeviceService = device_service_2.DeviceService;
 //# sourceMappingURL=index.js.map
