@@ -1,8 +1,9 @@
 {
   "name": "zigbee-service",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Service for zigbee-api",
   "main": "build/index.js",
+  "types" : "dist/index.d.ts",
   "repository": "https://github.com/apiel/zigbee-service",
   "author": "alexandre.piel@gmail.com",
   "license": "MIT",
