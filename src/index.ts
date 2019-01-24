@@ -1,7 +1,7 @@
-import { ShepherdConfig, useFactory } from "./shepherd.factory";
-import { Logger } from "./logger";
-import { ZigbeeService } from "./zigbee.service";
-import { DeviceService } from "./device.service";
+import { ShepherdConfig, useFactory } from './shepherd.factory';
+import { Logger } from './logger';
+import { ZigbeeService } from './zigbee.service';
+import { DeviceService } from './device.service';
 
 export function init(
     config: ShepherdConfig,
@@ -16,3 +16,7 @@ export function init(
         zigbeeService,
     }
 }
+
+export { useFactory } from './shepherd.factory';
+export { ZigbeeService } from './zigbee.service';
+export { DeviceService } from './device.service';
