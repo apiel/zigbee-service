@@ -5,18 +5,18 @@ import { DeviceService } from './device.service';
 
 export function init(
     config: ShepherdConfig,
-    logger: Logger = new Logger,
+    logger: Logger = new Logger(),
 ) {
     const shepherd = useFactory(config, logger);
     const deviceService = new DeviceService(shepherd, logger);
     const zigbeeService = new ZigbeeService(shepherd, deviceService, logger);
 
     return {
-        deviceService,
-        zigbeeService,
-    }
+        device: deviceService,
+        zigbee: zigbeeService,
+    };
 }
 
-export { useFactory } from './shepherd.factory';
-export { ZigbeeService } from './zigbee.service';
-export { DeviceService } from './device.service';
+export { useFactory, Shepherd, ShepherdConfig } from './shepherd.factory';
+export { ZigbeeService, eventType, messageType } from './zigbee.service';
+export { DeviceService, Action, Device, DeviceEndPoint, DeviceModel, MappedModel } from './device.service';

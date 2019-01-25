@@ -3,9 +3,9 @@ import { Logger } from './logger';
 import { ZigbeeService } from './zigbee.service';
 import { DeviceService } from './device.service';
 export declare function init(config: ShepherdConfig, logger?: Logger): {
-    deviceService: DeviceService;
-    zigbeeService: ZigbeeService;
+    device: DeviceService;
+    zigbee: ZigbeeService;
 };
-export { useFactory } from './shepherd.factory';
-export { ZigbeeService } from './zigbee.service';
-export { DeviceService } from './device.service';
+export { useFactory, Shepherd, ShepherdConfig } from './shepherd.factory';
+export { ZigbeeService, eventType, messageType } from './zigbee.service';
+export { DeviceService, Action, Device, DeviceEndPoint, DeviceModel, MappedModel } from './device.service';
