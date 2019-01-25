@@ -13,7 +13,7 @@ exports.useFactory = (config, logger) => {
     const path = config.SERIAL_PATH;
     const shepherd = new ZShepherd(path, {
         sp: { baudRate: 115200, rtscts: true },
-        dbPath: `${__dirname}/../../data/zigbee.db`,
+        dbPath: config.DB_PATH,
     });
     shepherd.on('ZNP:CLOSE', () => {
         logger.error('ZNP:CLOSE exit app!');

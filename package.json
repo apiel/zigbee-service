@@ -1,6 +1,6 @@
 {
   "name": "zigbee-service",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Service for zigbee-api",
   "main": "build/index.js",
   "types" : "dist/index.d.ts",
@@ -8,6 +8,7 @@
   "author": "alexandre.piel@gmail.com",
   "license": "MIT",
   "scripts": {
+    "prebuild": "rm -rf dist/",
     "build": "tsc -p tsconfig.json",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json -c tslint.json"
