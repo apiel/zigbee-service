@@ -13,8 +13,9 @@ export interface Shepherd {
 }
 
 export interface ShepherdConfig {
-    SERIAL_PATH: string,
-    ZIGBEE_PERMIT_JOIN: number,
+    SERIAL_PATH: string;
+    ZIGBEE_PERMIT_JOIN: number;
+    DB_PATH: string;
 }
 
 export const useFactory = (
@@ -24,7 +25,7 @@ export const useFactory = (
     const path = config.SERIAL_PATH;
     const shepherd = new ZShepherd(path, {
         sp: { baudRate: 115200, rtscts: true },
-        dbPath: `${__dirname}/../../data/zigbee.db`,
+        dbPath: config.DB_PATH,
     });
     shepherd.on('ZNP:CLOSE', () => {
         logger.error('ZNP:CLOSE exit app!');
