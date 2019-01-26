@@ -1,6 +1,6 @@
 {
   "name": "zigbee-service",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Service for zigbee-api",
   "main": "dist/index.js",
   "types" : "dist/index.d.ts",

@@ -35,20 +35,22 @@ class DeviceService extends events_1.EventEmitter {
                 throw new Error(`No converter available for '${key}' (${action[key]})`);
             }
             const message = converter.convert(key, action[key], action, type);
-            if (!message) {
-                throw new Error('No message available to send action');
+            if (message) {
+                return this.sendMessage(device, epId, message);
             }
-            return this.sendMessage(device, epId, message);
         }));
+    }
+    parseError(error) {
+        if (error.message === 'ccznp has not been initialized yet') {
+            this.logger.error('ccznp exit');
+            this.emit('error', 'ccznp exit');
+        }
     }
     sendMessage(device, epId, message) {
         return new Promise((resolve, reject) => {
             const callback = (error, response) => {
                 if (error) {
-                    if (error.message === 'ccznp has not been initialized yet') {
-                        this.logger.error('Exit because ccznp has been deactivated.');
-                        this.emit('error', 'ccznp exit');
-                    }
+                    this.parseError(error);
                     reject(error);
                 }
                 else {
@@ -89,8 +91,8 @@ class DeviceService extends events_1.EventEmitter {
                 return yield ep.read(cId, attrId);
             }
             catch (error) {
-                this.emit('error', 'ccznp exit');
-                throw error();
+                this.parseError(error);
+                throw error;
             }
         });
     }

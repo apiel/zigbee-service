@@ -45,6 +45,7 @@ export declare class DeviceService extends EventEmitter {
     getDevices(): any;
     getDevice(addr: string): any;
     sendAction({ addr, action, type }: Action): Promise<any>;
+    protected parseError(error: Error): void;
     sendMessage(device: Device, epId: number, message: any): Promise<any>;
     getMappedModel(addr: string): DeviceModel;
     getEndPoint(addr: string): DeviceEndPoint;

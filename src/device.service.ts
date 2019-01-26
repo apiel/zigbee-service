@@ -72,22 +72,25 @@ export class DeviceService extends EventEmitter {
                     throw new Error(`No converter available for '${key}' (${action[key]})`);
                 }
                 const message = converter.convert(key, action[key], action, type); // we might have to handle null as message
-                if (!message) {
-                    throw new Error('No message available to send action');
+                if (message) {
+                    return this.sendMessage(device, epId, message);
                 }
-                return this.sendMessage(device, epId, message);
             }),
         );
+    }
+
+    protected parseError(error: Error) {
+        if (error.message === 'ccznp has not been initialized yet') {
+            this.logger.error('ccznp exit');
+            this.emit('error', 'ccznp exit');
+        }
     }
 
     sendMessage(device: Device, epId: number, message: any): Promise<any> {
         return new Promise((resolve, reject) => {
             const callback = (error: Error, response: any) => {
                 if (error) {
-                    if (error.message === 'ccznp has not been initialized yet') {
-                        this.logger.error('Exit because ccznp has been deactivated.');
-                        this.emit('error', 'ccznp exit');
-                    }
+                    this.parseError(error);
                     reject(error);
                 } else {
                     resolve(response);
@@ -126,8 +129,8 @@ export class DeviceService extends EventEmitter {
             const ep = this.shepherd.find(addr, epId);
             return await ep.read(cId, attrId);
         } catch (error) {
-            this.emit('error', 'ccznp exit');
-            throw error();
+            this.parseError(error);
+            throw error;
         }
     }
 }
