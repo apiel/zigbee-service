@@ -83,6 +83,7 @@ class ZigbeeService extends events_1.EventEmitter {
         const cid = lodash_1.get(message, 'data.cid');
         const cmdId = lodash_1.get(message, 'data.cmdId');
         if (device && (cid || cmdId)) {
+            const addr = device.ieeeAddr;
             const mappedModel = zShepherdConverters.findByZigbeeModel(device.modelId);
             const converters = mappedModel.fromZigbee.filter((c) => {
                 if (cid) {
@@ -96,7 +97,7 @@ class ZigbeeService extends events_1.EventEmitter {
             converters.forEach((converter) => {
                 const data = converter.convert(mappedModel, message, null, device);
                 const cmd = cid || cmdId;
-                this.emit(exports.eventType.indMessage, { data, cmd });
+                this.emit(exports.eventType.indMessage, { addr, data, cmd });
             });
         }
     }
