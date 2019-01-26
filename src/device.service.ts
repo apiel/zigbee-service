@@ -1,4 +1,5 @@
 import * as zShepherdConverters from 'zigbee-shepherd-converters';
+import { EventEmitter } from 'events';
 
 import { Shepherd } from './shepherd.factory';
 import { DeviceNotFound } from './device.error';
@@ -42,11 +43,13 @@ export interface Action {
     type: 'set' | 'get';
 }
 
-export class DeviceService {
+export class DeviceService extends EventEmitter {
     constructor(
         private shepherd: Shepherd,
         private logger: Logger,
-    ) {}
+    ) {
+        super();
+    }
 
     getDevices() {
         return this.shepherd.list().filter((device: any) => device.type !== 'Coordinator');
@@ -83,7 +86,7 @@ export class DeviceService {
                 if (error) {
                     if (error.message === 'ccznp has not been initialized yet') {
                         this.logger.error('Exit because ccznp has been deactivated.');
-                        process.exit();
+                        this.emit('error', 'ccznp exit');
                     }
                     reject(error);
                 } else {
@@ -114,9 +117,17 @@ export class DeviceService {
     getEndPoint(addr: string): DeviceEndPoint {
         const device = this.getDevice(addr);
         const epId = device.epList[0];
-        return {device, epId };
+        return { device, epId };
     }
 
-    // ToDo
-    // getState
+    async getState(addr: string, cId: string, attrId: string) {
+        try {
+            const { epId } = this.getEndPoint(addr);
+            const ep = this.shepherd.find(addr, epId);
+            return await ep.read(cId, attrId);
+        } catch (error) {
+            this.emit('error', 'ccznp exit');
+            throw error();
+        }
+    }
 }

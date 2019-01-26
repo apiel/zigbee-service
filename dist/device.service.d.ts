@@ -1,3 +1,5 @@
+/// <reference types="node" />
+import { EventEmitter } from 'events';
 import { Shepherd } from './shepherd.factory';
 import { Logger } from './logger';
 export interface MappedModel {
@@ -36,7 +38,7 @@ export interface Action {
     action: any;
     type: 'set' | 'get';
 }
-export declare class DeviceService {
+export declare class DeviceService extends EventEmitter {
     private shepherd;
     private logger;
     constructor(shepherd: Shepherd, logger: Logger);
@@ -46,4 +48,5 @@ export declare class DeviceService {
     sendMessage(device: Device, epId: number, message: any): Promise<any>;
     getMappedModel(addr: string): DeviceModel;
     getEndPoint(addr: string): DeviceEndPoint;
+    getState(addr: string, cId: string, attrId: string): Promise<any>;
 }
