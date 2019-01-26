@@ -3,23 +3,18 @@ import { Logger } from './logger';
 import { ZigbeeService } from './zigbee.service';
 import { DeviceService } from './device.service';
 
-export interface ZigbeeAndDevice {
-    zigbee: ZigbeeService;
+export class ZigbeeAndDevice {
     device: DeviceService;
-}
+    zigbee: ZigbeeService;
 
-export function init(
-    config: ShepherdConfig,
-    logger: Logger = new Logger(),
-): ZigbeeAndDevice {
-    const shepherd = useFactory(config, logger);
-    const deviceService = new DeviceService(shepherd, logger);
-    const zigbeeService = new ZigbeeService(shepherd, deviceService, logger);
-
-    return {
-        device: deviceService,
-        zigbee: zigbeeService,
-    };
+    init(
+        config: ShepherdConfig,
+        logger: Logger = new Logger(),
+    ): void {
+        const shepherd = useFactory(config, logger);
+        this.device = new DeviceService(shepherd, logger);
+        this.zigbee = new ZigbeeService(shepherd, this.device, logger);
+    }
 }
 
 export { useFactory, Shepherd, ShepherdConfig } from './shepherd.factory';
