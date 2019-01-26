@@ -27,10 +27,6 @@ export const useFactory = (
         sp: { baudRate: 115200, rtscts: true },
         dbPath: config.DB_PATH,
     });
-    shepherd.on('ZNP:CLOSE', () => {
-        logger.error('ZNP:CLOSE exit app!');
-        process.exit();
-    });
     shepherd.on('ready', async () => {
         logger.log('Server is ready.');
         const time = config.ZIGBEE_PERMIT_JOIN;
